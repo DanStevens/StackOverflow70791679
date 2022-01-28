@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using JsonSubTypes;
+using Newtonsoft.Json;
 
 namespace MyApi
 {
@@ -21,6 +23,10 @@ namespace MyApi
         Task<ICollection<IBase>> GetAllAsync(CancellationToken cancellationToken = default);
     }
 
+    // Use a JsonConverter provided by JsonSubtypes, which deserializes a Base object as a Derived
+    // subtype when it contains a property named 'DerivedPropA'
+    [JsonConverter(typeof(JsonSubtypes))]
+    [JsonSubtypes.KnownSubTypeWithProperty(typeof(Derived), nameof(Derived.DerivedPropA))]
     public partial class Base : IBase {}
 
     public partial class Derived : IDerived {}
