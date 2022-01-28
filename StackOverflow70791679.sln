@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiClient", "ApiClient\ApiClient.csproj", "{2838FC78-1DE7-430B-875D-FB413E2AD204}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiClientTests", "ApiClientTests\ApiClientTests.csproj", "{925F25D4-EB17-47C3-9EC0-ED78FA20C079}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2838FC78-1DE7-430B-875D-FB413E2AD204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2838FC78-1DE7-430B-875D-FB413E2AD204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2838FC78-1DE7-430B-875D-FB413E2AD204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2838FC78-1DE7-430B-875D-FB413E2AD204}.Release|Any CPU.Build.0 = Release|Any CPU
+		{925F25D4-EB17-47C3-9EC0-ED78FA20C079}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{925F25D4-EB17-47C3-9EC0-ED78FA20C079}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{925F25D4-EB17-47C3-9EC0-ED78FA20C079}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{925F25D4-EB17-47C3-9EC0-ED78FA20C079}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B94CA8AD-B9BE-40A5-974E-87EE68CBECAE}
+	EndGlobalSection
+EndGlobal

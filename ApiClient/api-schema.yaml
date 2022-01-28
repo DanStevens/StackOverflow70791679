@@ -1,0 +1,55 @@
+﻿openapi: 3.0.0
+info:
+  title: My OpenAPI/Swagger schema for StackOverflow question #70791679
+  version: 1.0.0
+paths:
+  /getAll:
+    get:
+      operationId: getAll
+      responses:
+        '200':
+          description: Gets all objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAllResponseItem'
+components:
+  schemas:
+    Base:
+      type: object
+      description: Base type
+      properties:
+        baseProp1:
+          type: string
+          example: Alpha
+        baseProp2:
+          type: string
+          example: Bravo
+        baseProp3:
+          type: string
+          example: Charlie
+    Derived:
+      type: object
+      description: Derived type that extends Base
+      allOf:
+        - $ref: '#/components/schemas/Base'
+      properties:
+        derivedPropA:
+          type: string
+          example: Golf
+    GetAllResponseItem:
+      type: object
+      description: An item in the array type response for getAll operation
+      properties:
+        type:
+          $ref: '#/components/schemas/ObjectType'
+        properties:
+          $ref: '#/components/schemas/Base'
+    ObjectType:
+      type: string
+      description: Discriminates the type of object (e.g. Base, Derived) the item is holding
+      enum:
+        - Base
+        - Derived
