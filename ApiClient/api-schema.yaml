@@ -1,0 +1,60 @@
+﻿openapi: 3.0.0
+info:
+  title: My OpenAPI/Swagger schema for StackOverflow question #70791679
+  version: 1.0.0
+paths:
+  /getMyTypes:
+    get:
+      operationId: getMyTypes
+      responses:
+        '200':
+          description: Gets all MyType objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MyTypeBase'
+components:
+  schemas:
+    MyTypeProps:
+      type: object
+      description: Properties for MyType and its derivatives
+      properties:
+        baseProp1:
+          type: string
+          example: Alpha
+        baseProp2:
+          type: string
+          example: Bravo
+        baseProp3:
+          type: string
+          example: Charlie
+    MyTypeBase:
+      type: object
+      description: An object that represents a single MyType object in a response
+      #allOf:
+      #  - $ref: '#/components/schemas/MyTypeProps' # The trick!
+      properties:
+        type:
+          type: string
+          description: Descriminates the subtype of the MyTypeBase (e.g. MyType, MyTypeVariant)
+          enum:
+            - MyType
+            - MyTypeVariant
+        properties:
+          $ref: '#/components/schemas/MyTypeProps'
+    MyType:
+      type: object
+      description: The standard subtype of MyTypeBase
+      allOf:
+        - $ref: '#/components/schemas/MyTypeProps'
+    MyTypeVariant:
+      type: object
+      description: A Variant subtype of MyTypeBase which extends it with an additional property
+      allOf:
+        - $ref: '#/components/schemas/MyTypeProps'
+      properties:
+        derivedPropA:
+          type: string
+          example: Golf
