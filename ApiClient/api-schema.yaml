@@ -14,7 +14,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/GetAllResponseItem'
+                  oneOf:
+                    - $ref: '#/components/schemas/BaseResponse'
+                    - $ref: '#/components/schemas/DerivedResponse'
+                discriminator:
+                  propertyName: type
+                  mapping:
+                    Base: '#/components/schemas/BaseResponse'
+                    Derived: '#/components/schemas/DerivedResponse'
 components:
   schemas:
     Base:
@@ -39,7 +46,7 @@ components:
         derivedPropA:
           type: string
           example: Golf
-    GetAllResponseItem:
+    BaseResponse:
       type: object
       description: An item in the array type response for getAll operation
       properties:
@@ -47,6 +54,12 @@ components:
           $ref: '#/components/schemas/ObjectType'
         properties:
           $ref: '#/components/schemas/Base'
+    DerivedResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+      properties:
+        properties:
+          $ref: '#/components/schemas/Derived'
     ObjectType:
       type: string
       description: Discriminates the type of object (e.g. Base, Derived) the item is holding

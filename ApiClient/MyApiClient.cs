@@ -31,6 +31,18 @@ namespace MyApi
 
     public partial class Derived : IDerived {}
 
+    public partial class BaseResponse : IBase
+    {
+        public string BaseProp1 { get => ((IBase)Properties).BaseProp1; set => ((IBase)Properties).BaseProp1 = value; }
+        public string BaseProp2 { get => ((IBase)Properties).BaseProp2; set => ((IBase)Properties).BaseProp2 = value; }
+        public string BaseProp3 { get => ((IBase)Properties).BaseProp3; set => ((IBase)Properties).BaseProp3 = value; }
+    }
+
+    public partial class DerivedResponse : IDerived
+    {
+        public string DerivedPropA { get => ((IDerived)Properties).DerivedPropA; set => ((IDerived)Properties).DerivedPropA = value; }
+    }
+
     public partial class MyApiClient : IMyApiClient
     {
         async Task<ICollection<IBase>> IMyApiClient.GetAllAsync(CancellationToken cancellationToken)
