@@ -7,52 +7,37 @@ using Newtonsoft.Json;
 
 namespace MyApi
 {
-    public interface IBase
-    {
-        string BaseProp1 { get; set; }
-        string BaseProp2 { get; set; }
-        string BaseProp3 { get; set; }
-    }
-    public interface IDerived : IBase
-    {
-        string DerivedPropA { get; set; }
-    }
-
     public interface IMyApiClient
     {
-        Task<ICollection<IBase>> GetAllAsync(CancellationToken cancellationToken = default);
+        Task<ICollection<Base>> GetAllAsync(CancellationToken cancellationToken = default);
     }
 
     // Use a JsonConverter provided by JsonSubtypes, which deserializes a Base object as a Derived
     // subtype when it contains a property named 'DerivedPropA'
     [JsonConverter(typeof(JsonSubtypes))]
     [JsonSubtypes.KnownSubTypeWithProperty(typeof(Derived), nameof(Derived.DerivedPropA))]
-    public partial class Base : IBase {}
-
-    public partial class Derived : IDerived {}
+    public partial class Base  {}
 
     // Use a JsonConverter provided by JsonSubtypes, which deserializes a BaseResponse object as
     // a DerivedResponse subtype when the Type property is `ObjectType.Derived`
     [JsonConverter(typeof(JsonSubtypes), nameof(Type))]
     [JsonSubtypes.KnownSubType(typeof(DerivedResponse), ObjectType.Derived)]
-    public partial class BaseResponse : IBase
+    public partial class BaseResponse
     {
-        public string BaseProp1 { get => ((IBase)Properties).BaseProp1; set => ((IBase)Properties).BaseProp1 = value; }
-        public string BaseProp2 { get => ((IBase)Properties).BaseProp2; set => ((IBase)Properties).BaseProp2 = value; }
-        public string BaseProp3 { get => ((IBase)Properties).BaseProp3; set => ((IBase)Properties).BaseProp3 = value; }
+        public virtual Base Object => Properties;
     }
 
-    public partial class DerivedResponse : IDerived
+    public partial class DerivedResponse
     {
-        public string DerivedPropA { get => ((IDerived)Properties).DerivedPropA; set => ((IDerived)Properties).DerivedPropA = value; }
+        public override Derived Object => Properties;
     }
 
     public partial class MyApiClient : IMyApiClient
     {
-        async Task<ICollection<IBase>> IMyApiClient.GetAllAsync(CancellationToken cancellationToken)
+        async Task<ICollection<Base>> IMyApiClient.GetAllAsync(CancellationToken cancellationToken)
         {
             var resp = await GetAllAsync(cancellationToken).ConfigureAwait(false);
-            return resp.Select(o => (IBase) o.Properties).ToList();
+            return resp.Select(o => o.Object).ToList();
         }
     }
 }
