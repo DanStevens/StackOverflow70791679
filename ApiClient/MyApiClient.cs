@@ -31,6 +31,10 @@ namespace MyApi
 
     public partial class Derived : IDerived {}
 
+    // Use a JsonConverter provided by JsonSubtypes, which deserializes a BaseResponse object as
+    // a DerivedResponse subtype when the Type property is `ObjectType.Derived`
+    [JsonConverter(typeof(JsonSubtypes), nameof(Type))]
+    [JsonSubtypes.KnownSubType(typeof(DerivedResponse), ObjectType.Derived)]
     public partial class BaseResponse : IBase
     {
         public string BaseProp1 { get => ((IBase)Properties).BaseProp1; set => ((IBase)Properties).BaseProp1 = value; }
